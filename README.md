@@ -47,11 +47,11 @@ You can test the API using:
 - curl commands
 
 Example curl request:
-\`\`\`bash
+```bash
 curl -X POST http://localhost:3000/api/bfhl \
   -H "Content-Type: application/json" \
   -d '{"data": ["M", "1", "334", "4", "B", "$"]}'
-\`\`\`
+```
 
 ## Tech Stack
 
