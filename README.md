@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BFHL API - VIT Interview Question
 
-## Getting Started
+This is my solution for the VIT Full Stack interview question. I built a REST API that processes arrays and returns categorized data.
 
-First, run the development server:
+## What it does
 
-```bash
+The API takes an array of mixed data (numbers, letters, special characters) and returns:
+- Even and odd numbers (as strings)
+- Alphabets converted to uppercase
+- Special characters
+- Sum of all numbers
+- Concatenated alphabets in reverse order with alternating caps
+
+## API Endpoints
+
+### POST /api/bfhl
+Send data to process:
+\`\`\`json
+{
+  "data": ["a", "1", "334", "4", "R", "$"]
+}
+\`\`\`
+
+### GET /api/bfhl
+View API documentation and examples
+
+## Setup Instructions
+
+1. Clone this repository
+2. Install dependencies:
+\`\`\`bash
+npm install
+\`\`\`
+
+3. Run the development server:
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) to test the API
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Testing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+You can test the API using:
+- The web interface at the homepage
+- Postman or any HTTP client
+- curl commands
 
-## Learn More
+Example curl request:
+\`\`\`bash
+curl -X POST http://localhost:3000/api/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["M", "1", "334", "4", "B", "$"]}'
+\`\`\`
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js 14 (App Router)
+- TypeScript
+- Deployed on Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+\`\`\`
+├── app/
+│   ├── api/bfhl/
+│   │   └── route.tsx          # Main API logic
+│   ├── page.tsx               # Homepage with API tester
+│   └── layout.tsx
+└── README.md
+\`\`\`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- All numbers are returned as strings as per requirements
+- User ID format: {full_name_ddmmyyyy}
+- Concatenation logic uses alternating caps starting with uppercase
+- API handles edge cases and validates input data
+
+Built for VIT interview assessment.
