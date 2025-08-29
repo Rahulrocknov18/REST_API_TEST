@@ -15,11 +15,11 @@ The API takes an array of mixed data (numbers, letters, special characters) and 
 
 ### POST /api/bfhl
 Send data to process:
-\`\`\`json
+```json
 {
   "data": ["a", "1", "334", "4", "R", "$"]
 }
-\`\`\`
+```
 
 ### GET /api/bfhl
 View API documentation and examples
@@ -28,14 +28,14 @@ View API documentation and examples
 
 1. Clone this repository
 2. Install dependencies:
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 3. Run the development server:
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 4. Open [http://localhost:3000](http://localhost:3000) to test the API
 
