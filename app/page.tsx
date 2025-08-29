@@ -1,103 +1,147 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useState } from "react"
+
+export default function APITester() {
+  const [input, setInput] = useState('')
+  const [response, setResponse] = useState<any>(null)
+  const [loading, setLoading] = useState(false)
+
+  const testAPI = async () => {
+    setLoading(true)
+    try {
+      const data = JSON.parse(input)
+      const res = await fetch("/api/bfhl", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data }),
+      })
+
+      const result = await res.json()
+      setResponse(result)
+    } catch (error) {
+      setResponse({ error: "Invalid JSON or API error" })
+    }
+    setLoading(false)
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto", fontFamily: "Arial, sans-serif" }}>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <div style={{ marginBottom: "30px" }}>
+        <h3>Test API</h3>
+        <div style={{ marginBottom: "15px" }}>
+          <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Input Data (JSON Array):</label>
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder='["a","1","334","4","R", "$"]'
+            style={{
+              width: "100%",
+              height: "80px",
+              padding: "8px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              fontSize: "14px",
+            }}
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={testAPI}
+          disabled={loading}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: loading ? "#ccc" : "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: loading ? "not-allowed" : "pointer",
+            fontSize: "14px",
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          {loading ? "Testing..." : "Test API"}
+        </button>
+      </div>
+
+      <div style={{ marginBottom: "30px" }}>
+        <h3>Response</h3>
+        <div
+          style={{
+            backgroundColor: "#f8f9fa",
+            border: "1px solid #ddd",
+            borderRadius: "4px",
+            padding: "15px",
+            minHeight: "100px",
+          }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          {response ? (
+            <pre style={{ margin: 0, fontSize: "12px", overflow: "auto" }}>{JSON.stringify(response, null, 2)}</pre>
+          ) : (
+            <p style={{ color: "#666", margin: 0 }}>No response yet. Test the API above.</p>
+          )}
+        </div>
+      </div>
+
+      <div style={{ marginBottom: "30px" }}>
+        <h3>Quick Test Examples</h3>
+        <button
+          onClick={() => setInput('["a","1","334","4","R", "$"]')}
+          style={{
+            padding: "8px 15px",
+            margin: "5px",
+            backgroundColor: "#f8f9fa",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          Example A
+        </button>
+        <button
+          onClick={() => setInput('["2","a", "y", "4", "&", "-", "*", "5","92","b"]')}
+          style={{
+            padding: "8px 15px",
+            margin: "5px",
+            backgroundColor: "#f8f9fa",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Example B
+        </button>
+        <button
+          onClick={() => setInput('["A","ABcD","DOE"]')}
+          style={{
+            padding: "8px 15px",
+            margin: "5px",
+            backgroundColor: "#f8f9fa",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Example C
+        </button>
+      </div>
+
+      <div style={{ backgroundColor: "#f8f9fa", padding: "15px", borderRadius: "4px" }}>
+        <h3>API Info</h3>
+        <p>
+          <strong>Method:</strong> POST
+        </p>
+        <p>
+          <strong>Route:</strong> /api/bfhl
+        </p>
+        <p>
+          <strong>Content-Type:</strong> application/json
+        </p>
+        <p>
+          <strong>Request:</strong> {`{ "data": ["array", "of", "values"] }`}
+        </p>
+      </div>
     </div>
-  );
+  )
 }
