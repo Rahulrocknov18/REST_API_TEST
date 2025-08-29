@@ -61,14 +61,14 @@ curl -X POST http://localhost:3000/api/bfhl \
 
 ## Project Structure
 
-\`\`\`
+```
 ├── app/
 │   ├── api/bfhl/
 │   │   └── route.tsx          # Main API logic
 │   ├── page.tsx               # Homepage with API tester
 │   └── layout.tsx
 └── README.md
-\`\`\`
+```
 
 ## Notes
 
